@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewData["Title"] = "ShowImage";
+}
+
+<h2>ShowImage</h2>
+@{
+    var data = ViewData["message"];
+}
+<div>
+    <p>Taken from wikpedia</p>
+    <img src="@data" alt="Red dot" />
+</div>

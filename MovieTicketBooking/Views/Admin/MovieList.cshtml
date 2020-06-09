@@ -1,0 +1,37 @@
+﻿@model IEnumerable<MovieTicketBooking.Models.MovieInfo>
+
+@{
+    ViewData["Title"] = "RemoveShow";
+}
+
+@*<h2>RemoveShow</h2>*@
+
+
+@if (ViewBag.message != null)
+{
+    <h2>@ViewBag.message</h2>
+}
+@using (Html.BeginForm("MovieOnDate", "Movie", FormMethod.Post))
+{
+    <input type="date" value="Select Date" name="date" min=@DateTime.Now.ToString("yyyy-MM-dd") required>
+    <button type="submit">Search</button>
+}
+<td>
+    @Html.ActionLink("Test", "Test")
+</td>
+<table class="table">
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MovieName)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Delete", "RemoveMovie", new { Movieid = item.MovieID })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

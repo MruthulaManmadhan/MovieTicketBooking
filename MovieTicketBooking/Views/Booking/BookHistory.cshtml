@@ -1,0 +1,71 @@
+﻿@model IEnumerable<MovieTicketBooking.Models.MovieInfo>
+
+@{
+    ViewData["Title"] = "Booked Movies";
+}
+
+<h2>Booked List</h2>
+
+@{
+<h3>
+    @Html.ActionLink("Logout", "Logout","User")
+</h3>
+ }
+@{ 
+    <h3>
+        @Html.ActionLink("Home","Home","Movie")
+    </h3>
+}
+@if(ViewBag.message!=null)
+{
+    <h2>@ViewBag.message</h2>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MovieName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Time)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Seat)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MovieName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Date)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Seat)
+                </td>
+                <td>
+                    @{var tt = DateTime.Parse(item.Time).TimeOfDay;
+                        var gg = DateTime.Now.TimeOfDay;}
+                    @if ((item.Date.Date == @DateTime.Now.Date && DateTime.Parse(item.Time).TimeOfDay >= DateTime.Now.TimeOfDay) ||(item.Date>DateTime.Now))
+                    {
+                        @Html.ActionLink("Delete", "CancelBooking", "Booking", new { bookid = item.BookID })
+                    }
+                </td>
+                @*<td>
+                    @Html.ActionLink("Delete", "CancelBooking","Booking", new { bookid = item.BookID })
+                </td>*@
+            </tr>
+        }
+    </tbody>
+</table>

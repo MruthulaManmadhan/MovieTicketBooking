@@ -1,0 +1,47 @@
+﻿@model MovieTicketBooking.Models.MovieInfo
+
+@{
+    ViewData["Title"] = "MovieDetails";
+}
+
+<h2>Movie Details</h2>
+<a asp-action="../">Back to movies</a>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dd>
+            @Html.DisplayFor(model => model.MovieName)
+        </dd>
+        <dd>
+            <img src="~/images/@Html.DisplayFor(model =>model.Pic)" style="height:200px;width:200px;" />
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Director)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Director)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Actor)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Actor)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Release)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Release)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Language)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Language)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Shows", "MovieShows","Movie", new { MovieId = Model.MovieID })
+</div>

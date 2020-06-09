@@ -1,0 +1,108 @@
+﻿@model IEnumerable<MovieTicketBooking.Models.MovieInfo>
+
+@{
+    ViewData["Title"] = "ShowsMovieDate";
+}
+@{
+    string date = Convert.ToString(ViewData["message1"]);
+    int logged = Convert.ToInt32(ViewData["message2"]);
+}
+
+@*<h2>ShowsMovieDate</h2>*@
+
+@foreach (var item in Model)
+{
+    <td>
+        <h2>
+            @Html.DisplayFor(modelItem => item.MovieName)
+        </h2>
+    </td>
+    break;
+}
+
+
+@if (date != "")
+{
+    @foreach (var item in Model)
+    {
+        <td>
+            <h2>
+                @Html.DisplayFor(modelItem => item.Date)
+            </h2>
+        </td>
+        break;
+    }
+}
+
+
+<table class="table">
+    <thead>
+        <tr>
+            @{var currentShows = Model.Where(x => (DateTime.Parse(x.Time).TimeOfDay > DateTime.Now.TimeOfDay && x.Date==DateTime.Now.Date)||(x.Date>DateTime.Now.Date)); }   @*only if Date=Today else all*@
+            @if (currentShows.Count() > 0)
+            {
+                @if (date == "")
+                {
+                    <th>
+                        @Html.DisplayNameFor(model => model.Date)
+                    </th>
+                }
+                <th>
+                    @Html.DisplayNameFor(model => model.Time)
+
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AvailableSeats)
+                </th>
+             }
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in currentShows)
+        {
+            @*@if (DateTime.Parse(item.Time).TimeOfDay > DateTime.Now.TimeOfDay)
+                {*@
+            <tr>
+                @if (date == "")
+                {
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Date)
+                    </td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.Time)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AvailableSeats)
+                </td>
+                <td>
+                    @* @if (item.AvailableSeats > 0)
+                            {
+                        @Html.ActionLink("Book", "BookSeat", new { id = item.TimeID, seat = item.AvailableSeats })
+                            }*@
+
+                    @if (item.AvailableSeats > 0@*&& DateTime.Parse(item.Time).TimeOfDay > DateTime.Now.TimeOfDay*@)
+                     {
+                        @if (@logged == 0)
+                         {
+                            @Html.ActionLink("Book", "Login", "User", new { id = item.TimeID, seat = item.AvailableSeats })
+                         }
+                        else
+                        {
+                            @Html.ActionLink("Book", "BookSeat", "Booking", new { id = item.TimeID, seat = item.AvailableSeats })
+                        }
+                     }
+                </td>
+            </tr>
+            //}
+         }
+        @if (currentShows.Count() <= 0)
+        {
+            <tr>
+                <h3>There is no shows available!!</h3>
+            </tr>
+        }
+
+    </tbody>
+</table>
+@Html.ActionLink("Back to movies", "Home", "Movie")

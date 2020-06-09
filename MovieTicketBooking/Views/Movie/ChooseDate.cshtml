@@ -1,0 +1,24 @@
+﻿@model MovieTicketBooking.Models.MovieInfo
+
+@{
+    ViewData["Title"] = "ChooseDate";
+}
+
+<h3>Choose Date</h3>
+<a asp-action="../">Back to movies</a>
+
+
+<div>
+    <h2>
+        @Html.DisplayFor(model => model.MovieName)
+    </h2>
+</div>
+<tr>
+    Enter date
+</tr>
+@using (Html.BeginForm("MovieShows", "Movie", FormMethod.Post))
+{
+    @Html.HiddenFor(model => model.MovieID)
+    <input type="date" name="Date" min=@DateTime.Now.ToString("yyyy-MM-dd") required>
+    <button type="submit">Search</button>
+}
